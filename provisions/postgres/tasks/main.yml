@@ -1,5 +1,14 @@
 - name: ensure apt cache is up to date
   apt: update_cache=yes
+
+- name: Generating new locales
+  become: yes
+  command: locale-gen en_US en_US.UTF-8 ru_RU ru_RU.UTF-8
+
+- name: Reconfiguring new locales
+  become: yes
+  command: dpkg-reconfigure locales
+
 - name: ensure packages are installed
   apt: name={{item}}
   with_items:
